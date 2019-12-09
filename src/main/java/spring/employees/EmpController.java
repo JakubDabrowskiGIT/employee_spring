@@ -10,14 +10,14 @@ import java.util.List;
 
 @Controller
 public class EmpController {
-    private List<EmpLombok> list;
+    private List<Emp> list;
 
     public EmpController() {
         list = new ArrayList<>();
-        list.add(new EmpLombok(1, "Janek", 120000, "Radom"));
-        list.add(new EmpLombok(2, "Zosia", 9000, "Makowiec"));
-        list.add(new EmpLombok(3, "Marek", 10000, "Warszawa"));
-        list.add(new EmpLombok(4, "Krysytna", 13000, "Ryzowice"));
+        list.add(new Emp(1, "Janek", 120000, "Radom"));
+        list.add(new Emp(2, "Zosia", 9000, "Makowiec"));
+        list.add(new Emp(3, "Marek", 10000, "Warszawa"));
+        list.add(new Emp(4, "Krysytna", 13000, "Ryzowice"));
     }
 
     @RequestMapping("/")
@@ -27,18 +27,18 @@ public class EmpController {
 
     @RequestMapping(value = "/empform", method = RequestMethod.GET)
     public String showform(Model model) {
-        model.addAttribute("emp", new EmpLombok());
+        model.addAttribute("emp", new Emp());
         return "emp/empform";
     }
 
     @RequestMapping(value = "/save_emp")
-    public ModelAndView save(@ModelAttribute(value = "emp") EmpLombok emp) {
+    public ModelAndView save(@ModelAttribute(value = "emp") Emp emp) {
         if (emp.getId() < 0) {
             System.out.println("Adding a new emp");
             emp.setId(list.size() + 1);
             list.add(emp);
         } else {
-            EmpLombok empTemp = getEmployeesById(emp.getId());
+            Emp empTemp = getEmployeesById(emp.getId());
             empTemp.setName(emp.getName());
             empTemp.setSalary(emp.getSalary());
             empTemp.setDesignation(emp.getDesignation());
@@ -54,7 +54,7 @@ public class EmpController {
 
     @RequestMapping(value = "/edit_emp", method = RequestMethod.POST)
     public ModelAndView edit(@RequestParam(value = "emp_id") String emp_id) {
-        EmpLombok emp = getEmployeesById(Integer.parseInt(emp_id));
+        Emp emp = getEmployeesById(Integer.parseInt(emp_id));
         return new ModelAndView("emp/empform", "emp", emp);
     }
 
@@ -69,7 +69,7 @@ public class EmpController {
         return new ModelAndView("emp/viewemp", "list", list);
     }
 
-    private EmpLombok getEmployeesById(@RequestParam int id) {
+    private Emp getEmployeesById(@RequestParam int id) {
         return list.stream().filter(f -> f.getId() == id).findFirst().get();
     }
 }

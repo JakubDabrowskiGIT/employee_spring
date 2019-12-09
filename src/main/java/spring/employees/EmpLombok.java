@@ -11,5 +11,5 @@ public class EmpLombok {
     private float salary;
     private String designation;
 
-    public EmpLombok(){}
+    private EmpLombok(){}
 }
