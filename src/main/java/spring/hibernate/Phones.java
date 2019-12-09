@@ -1,16 +1,13 @@
 package spring.hibernate;
 
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Objects;
 
 @Entity
-@Table(name = "Cars")
+@Table(name = "Phones")
 @Data
-@AllArgsConstructor
-public class Cars implements HibernateEntity  {
+@RequiredArgsConstructor
+public class Phones implements HibernateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,20 +16,17 @@ public class Cars implements HibernateEntity  {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "EMPLOYEE_ID", nullable = false, referencedColumnName="ID")
-    @Getter @Setter
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    @NonNull
     public Employees employees;
 
-    @Column(name = "Name")
+    @Column(name = "name")
+    @NonNull
     private String name;
 
-    @Column(name = "Model")
+    @Column(name = "model")
+    @NonNull
     private String model;
 
-    @Column(name = "RegistrationDate")
-    @ToString.Exclude
-    private Date registrationDate;
-
-    public Cars() {}
+    public Phones(){};
 }
+

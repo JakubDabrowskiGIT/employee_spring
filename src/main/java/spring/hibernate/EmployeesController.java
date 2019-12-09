@@ -16,13 +16,14 @@ import java.util.List;
 public class EmployeesController {
 
     private List<Employees> list;
-
-    private EmployeeDao employeeDao;
+    
+    private HibernateDao hibernateDao;
 
     public EmployeesController() {
-        employeeDao = new EmployeeDao();
         try {
-            list = employeeDao.getEmployees();
+            hibernateDao = new HibernateDao();
+            DataToDatabase.supplyDatabase();
+            list = hibernateDao.get(Employees.class);
         } catch (NullPointerException ex) {
             System.out.println("Brak połączenia z bazą danych");
             ex.getMessage();
@@ -92,17 +93,18 @@ public class EmployeesController {
         employeesTemp.setStartJobDate(employees.getStartJobDate());
         employeesTemp.setBenefit(employees.getBenefit());
         employeesTemp.setCars(employees.getCars());
+        employeesTemp.setPhones(employees.getPhones());
     }
 
     private void updateEmployeeInDB(Employees employees){
-        employeeDao.updateEmployees(employees);
+        hibernateDao.update(employees);
     }
 
     private void addEmployeeInDB(Employees employees){
-        employeeDao.saveEmployee(employees);
+        hibernateDao.save(employees);
     }
 
     private void deleteEmployeeInDB(Employees employees){
-        employeeDao.deleteEmployees(employees);
+        hibernateDao.delete(employees);
     }
 }
