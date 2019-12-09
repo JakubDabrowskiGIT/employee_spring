@@ -23,7 +23,7 @@ public class EmployeeDao {
 
     public List<Employees> getEmployees() {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
-            return session.createQuery("from Employees", Employees.class).list();
+            return session.createQuery("from Employees").list();
         }
     }
 
@@ -32,6 +32,20 @@ public class EmployeeDao {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.update(employee);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteEmployees(Employees employee) {
+        Transaction transaction = null;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.delete(employee);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {

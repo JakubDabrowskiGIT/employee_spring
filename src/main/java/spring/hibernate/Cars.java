@@ -1,9 +1,6 @@
 package spring.hibernate;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,6 +8,7 @@ import java.util.Date;
 @Entity
 @Table(name = "Cars")
 @Data
+@AllArgsConstructor
 public class Cars {
 
     @Id
@@ -22,6 +20,7 @@ public class Cars {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "EMPLOYEE_ID", nullable = false, referencedColumnName="ID")
     @Getter @Setter
+    @EqualsAndHashCode.Exclude
     public Employees employees;
 
     @Column(name = "Name")
@@ -37,7 +36,5 @@ public class Cars {
     @ToString.Exclude
     private Date registrationDate;
 
-    public Cars(){
-
-    }
+    public Cars(){}
 }

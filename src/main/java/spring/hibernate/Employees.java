@@ -58,7 +58,9 @@ public class Employees {
 
     @OneToMany(mappedBy = "employees", orphanRemoval = true, fetch = FetchType.EAGER)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Cars> cars;
 
     public Employees(){}
+
 }

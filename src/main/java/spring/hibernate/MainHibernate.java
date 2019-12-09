@@ -35,6 +35,5 @@ public class MainHibernate {
         employee.setCars(carSet);
 
         employeeDao.updateEmployees(employee);
-
     }
 }

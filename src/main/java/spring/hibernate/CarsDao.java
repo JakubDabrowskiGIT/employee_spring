@@ -27,11 +27,25 @@ public class CarsDao {
         }
     }
 
-    public void updateCars(Cars employee) {
+    public void updateCars(Cars cars) {
         Transaction transaction = null;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.update(employee);
+            session.update(cars);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteCars(Cars cars) {
+        Transaction transaction = null;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.delete(cars);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
