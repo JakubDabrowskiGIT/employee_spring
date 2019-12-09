@@ -56,6 +56,9 @@ public class Employees {
     @Getter @Setter
     private String email;
 
-    public Employees(){}
+    @OneToMany(mappedBy = "employees", orphanRemoval = true, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private Set<Cars> cars;
 
+    public Employees(){}
 }

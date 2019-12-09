@@ -1,7 +1,9 @@
 package spring.hibernate;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainHibernate {
     public static void main(String[] args) {
@@ -15,5 +17,24 @@ public class MainHibernate {
 
         employeeDao.updateEmployees(employeeToUpdate);
         employeesList.forEach(System.out::println);
+
+        System.out.println(employeesList.get(0).getCars());
+
+        CarsDao carsDao = new CarsDao();
+
+        Cars cars = new Cars();
+        cars.setName("Audi");
+        cars.setModel("Q5");
+        cars.setEmployees(employee);
+
+        Set<Cars> carSet = new HashSet<>();
+        carSet.add(cars);
+
+        carsDao.saveCars(cars);
+
+        employee.setCars(carSet);
+
+        employeeDao.updateEmployees(employee);
+
     }
 }
